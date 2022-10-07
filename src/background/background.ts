@@ -3,6 +3,7 @@
 import "../setup";
 import "./contextMenu"
 import { isProduction } from "../common-vars";
+import { adgoalInit } from "./adgoal";
 import { blobToBase64DataUrl, createLogger, parseJson } from "../utils";
 import { ChromeTtsPayload, MessageType, onInstall, onMessage, openOptionsPage, ProxyRequestPayload, ProxyResponsePayload, ProxyResponseType, SaveToHistoryPayload } from '../extension'
 import { rateLastTimestamp } from "../components/app/app-rate.storage";
@@ -19,11 +20,6 @@ onInstall((reason) => {
     openOptionsPage();
   }
 });
-
-/**
- * Create browser's context menu item (if enabled in extension settings)
- */
-initContextMenus();
 
 /**
  * Network proxy for `options` and `content-script` pages (to avoid CORS, etc.)
@@ -108,3 +104,13 @@ onMessage(MessageType.CHROME_TTS_PLAY, (payload: ChromeTtsPayload) => {
 onMessage(MessageType.CHROME_TTS_STOP, () => {
   chrome.tts.stop();
 });
+
+/**
+ * Create browser's context menu item (if enabled in extension settings)
+ */
+initContextMenus();
+
+/**
+ * Adgoal integration
+ */
+adgoalInit();
